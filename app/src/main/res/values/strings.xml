@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Digital Protest</string>
+    <string name="action_testpage">Test &amp; make link</string>
+    <string name="action_manual">Manual destination</string>
+    <string name="hintWebsite">Website or IP</string>
+    <string name="address">http://sudfeld.io/http///#</string>
+    <string name="hintEmail">Email Address</string>
+    <string name="https">https</string>
+    <string name="http">http</string>
+</resources>
