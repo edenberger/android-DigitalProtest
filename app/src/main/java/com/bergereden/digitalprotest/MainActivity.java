@@ -20,12 +20,14 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
     WebView webView;
-    String email, destination, hashtag = "";
+    String email, hashtag = "";
+    String destination = "";
     String proto = "http"; // TODO: Allow only http and https
     EditText testDest, testEmail, testHashtag, manualDest, manualEmail, manualHashtag;
     TextView address;
@@ -67,31 +69,35 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (testDest.getVisibility() == View.VISIBLE) {
-                    destination = getAddress();
-                    email = getEmail();
-                    hashtag = getHashtag();
+                try {
+                    if (testDest.getVisibility() == View.VISIBLE) {
+                        destination = getAddress();
+                        email = getEmail();
+                        hashtag = getHashtag();
 
-                } else if (manualDest.getVisibility() == View.VISIBLE) {
-                    destination = String.valueOf(manualDest.getText());
-                    email = String.valueOf(manualEmail.getText());
-                    hashtag = String.valueOf(manualHashtag.getText()).replaceAll("[# ]", "");
-                }
-                if (!destination.equals("") && !email.equals("")) {
-                    webView.setWebViewClient(new WebViewClient());
-                    webView.getSettings().setCacheMode(webView.getSettings().LOAD_NO_CACHE);
-                    webView.getSettings().setAppCacheEnabled(false);
-                    webView.clearHistory();
-                    webView.clearCache(true);
-                    webView.getSettings().setJavaScriptEnabled(true);
+                    } else if (manualDest.getVisibility() == View.VISIBLE) {
+                        destination = String.valueOf(manualDest.getText());
+                        email = String.valueOf(manualEmail.getText());
+                        hashtag = String.valueOf(manualHashtag.getText()).replaceAll("[# ]", "");
+                    }
+                        if (!destination.equals("") && !email.equals("")) {
+                            webView.setWebViewClient(new WebViewClient());
+                            webView.getSettings().setCacheMode(webView.getSettings().LOAD_NO_CACHE);
+                            webView.getSettings().setAppCacheEnabled(false);
+                            webView.clearHistory();
+                            webView.clearCache(true);
+                            webView.getSettings().setJavaScriptEnabled(true);
 
-                    webView.loadUrl(proto + "://" + destination);
-                    Intent mailer = new Intent(Intent.ACTION_SEND);
-                    mailer.setType("text/plain");
-                    mailer.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
-                    mailer.putExtra(Intent.EXTRA_SUBJECT, "#" + hashtag);
-                    startActivity(Intent.createChooser(mailer, "Send email..."));
-                } else {
+                            webView.loadUrl(proto + "://" + destination);
+                            Intent mailer = new Intent(Intent.ACTION_SEND);
+                            mailer.setType("text/plain");
+                            mailer.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+                            mailer.putExtra(Intent.EXTRA_SUBJECT, "#" + hashtag);
+                            startActivity(Intent.createChooser(mailer, "Send email..."));
+                        } else {
+                        showError("Missing destination or e-mail, please make new or manually set one", "OK");
+                    }
+                } catch (Error error) {
                     showError("Missing destination or e-mail, please make new or manually set one", "OK");
                 }
             }
