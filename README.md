@@ -13,12 +13,12 @@ The app designed to send a web-request but never show the page, nor its ads.
 
 Users can easily generate and share a "special" link with the needed information to join a protest:
 
-http://sudfeld.io/http/www.example.com/info@example.com
+http://sudfeld.io/http/www.example.com/info@example.com  
 
-http://sudfeld.io - is so the app will recognize the link
-<ins>http</ins> - can also be https
-www.example.com - is the destination domain or IP
-<ins>info@example.com</ins> - is the destination Email address
+http://sudfeld.io - is so the app will recognize the link  
+<ins>http</ins> - can also be https  
+www.example.com - is the destination domain or IP  
+<ins>info@example.com</ins> - is the destination Email address  
 
 After a web-request has been sent the default Email app opens with the destination address already set.
 
